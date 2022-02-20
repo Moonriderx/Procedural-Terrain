@@ -8,7 +8,8 @@ float flying = 0;
 
 void setup() {
   size(1200, 1200, P3D);
-
+  //colorMode(RGB, 100, 100, 100); // In setup()
+  colorMode(HSB, 100, 100, 100); // In setup()
   
   cols = w / scale; // number of cols is width of the grid divided by the scale
   rows = h / scale; // same but for height
@@ -31,14 +32,14 @@ void draw() {
   }
   
   background(0);
-  stroke(255);
-  noFill(); 
+  //stroke(255);
+  //noFill(); 
   
   translate(width/2, height/2+150);
   rotateX(PI/3); // its 60 degrees
   translate(-w/2, -h/2); 
   
-  for (int y = 0; y < rows-1; y++) {
+  /*for (int y = 0; y < rows-1; y++) {
     beginShape(TRIANGLE_STRIP); // for every single row begin shape
     stroke(map(y,0,rows,0,255)); //adds a good fog
     for (int x = 0; x < cols; x++) {
@@ -47,9 +48,28 @@ void draw() {
       //rect(x*scale, y*scale, scale, scale);
     }
     endShape();
+    */
+     
+     
+     //colorMode(HSB, 100, 100, 100); // In setup()
+
+    // In body of code:
+    for (int y = 0; y < rows-1; y++) {
+    beginShape(TRIANGLE_STRIP);
+    for (int x = 0; x < cols; x++) {
+      
+      float z = terrain[x][y]; 
+      fill(z+20, 100, 100);    
+      vertex(x*scale, y*scale, z);
+      
+      float z1 = terrain[x][y+1];
+      fill(z1+20, 100, 100);        
+      vertex(x*scale, (y+1)*scale, z1);
+      //rect(x*scl, y*scl, scl, scl);
+    }
+    endShape();
   }
 }
-
 
 /*
 Perlin noise refers to an algorithm that is a way of getting smooth random numbers. It assures the smooth transition of each number compared to the number before. Like a graph.
